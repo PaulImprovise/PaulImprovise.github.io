@@ -284,6 +284,7 @@ class BluetoothTerminal {
           this._log('Characteristic found ');
 
           this._characteristic = characteristic; // Remember characteristic.
+		  
 		this._log('> Characteristic UUID:  ' + characteristic.uuid);
 		this._log('> Broadcast:            ' + characteristic.properties.broadcast);
 		this._log('> Read:                 ' + characteristic.properties.read);
@@ -308,7 +309,7 @@ class BluetoothTerminal {
   _startNotifications(characteristic) {
     this._log('Starting notifications...');
 
-    return characteristic.startNotifications().
+    return characteristic.readValue().
         then(() => {
           this._log('Notifications started');
 
@@ -316,6 +317,19 @@ class BluetoothTerminal {
               this._boundHandleCharacteristicValueChanged);
         });
   }
+  
+  /*
+    _startNotifications(characteristic) {
+    this._log('Starting notifications...');
+
+    return characteristic.startNotifications().
+        then(() => {
+          this._log('Notifications started');
+
+          characteristic.addEventListener('characteristicvaluechanged',
+              this._boundHandleCharacteristicValueChanged);
+        });
+  }*/
 
   /**
    * Stop notifications.
