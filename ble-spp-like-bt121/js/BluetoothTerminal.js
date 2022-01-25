@@ -306,19 +306,7 @@ class BluetoothTerminal {
    * @return {Promise}
    * @private
    */
-  _startNotifications(characteristic) {
-    this._log('Starting notifications...');
-
-    return characteristic.readValue().
-        then(() => {
-          this._log('Notifications started');
-
-          characteristic.addEventListener('characteristicvaluechanged',
-              this._boundHandleCharacteristicValueChanged);
-        });
-  }
   
-  /*
     _startNotifications(characteristic) {
     this._log('Starting notifications...');
 
@@ -329,7 +317,7 @@ class BluetoothTerminal {
           characteristic.addEventListener('characteristicvaluechanged',
               this._boundHandleCharacteristicValueChanged);
         });
-  }*/
+  }
 
   /**
    * Stop notifications.
