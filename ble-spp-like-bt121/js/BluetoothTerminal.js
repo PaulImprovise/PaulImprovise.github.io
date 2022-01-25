@@ -281,7 +281,7 @@ class BluetoothTerminal {
           return service.getCharacteristic(this._characteristicUuid);
         }).
         then((characteristic) => {
-          this._log('Characteristic found');
+          this._log('Characteristic found' + characteristics.map(c => c.uuid).join('\n' + ' '.repeat(19)));
 
           this._characteristic = characteristic; // Remember characteristic.
 
