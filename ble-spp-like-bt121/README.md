@@ -11,9 +11,6 @@ One of browsers which supports Web Bluetooth API by default
 3. Opera 43+
 4. Opera for Android 43+
 
-All this browsers support other necessary features, such as [ES6 classes](https://caniuse.com/#feat=es6-class) and PWA
-capabilities ([Web App Manifest](https://caniuse.com/#feat=web-app-manifest) and
-[Service Workers](https://caniuse.com/#feat=serviceworkers)), so I don't pay attention to it here.
 
 
 
