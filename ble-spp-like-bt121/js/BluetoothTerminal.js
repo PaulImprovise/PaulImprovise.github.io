@@ -283,18 +283,7 @@ class BluetoothTerminal {
         then((characteristic) => {
           this._log('Characteristic found ');
 
-          this._characteristic = characteristic; // Remember characteristic.
-		  
-		this._log('> Characteristic UUID:  ' + characteristic.uuid);
-		this._log('> Broadcast:            ' + characteristic.properties.broadcast);
-		this._log('> Read:                 ' + characteristic.properties.read);
-		this._log('> Write w/o response:   ' + characteristic.properties.writeWithoutResponse);
-		this._log('> Write:                ' + characteristic.properties.write);
-		this._log('> Notify:               ' + characteristic.properties.notify);
-		this._log('> Indicate:             ' + characteristic.properties.indicate);
-		this._log('> Signed Write:         ' + characteristic.properties.authenticatedSignedWrites);
-		this._log('> Queued Write:         ' + characteristic.properties.reliableWrite);
-		this._log('> Writable Auxiliaries: ' + characteristic.properties.writableAuxiliaries);
+          this._characteristic = characteristic; // Remember characteristic.	  
 	  
           return this._characteristic;
         });
