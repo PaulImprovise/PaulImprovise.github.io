@@ -4,8 +4,8 @@
 class BluetoothTerminal {
   /**
    * Create preconfigured Bluetooth Terminal instance.
-   * @param {!(number|string)} [serviceUuid=0xFFE0] - Service UUID
-   * @param {!(number|string)} [characteristicUuid=0xFFE1] - Characteristic UUID
+   * @param {!(number|string)} [serviceUuid=0x1101] - Service UUID
+   * @param {!(number|string)} [characteristicUuid=0x0100] - Characteristic UUID
    * @param {string} [receiveSeparator='\n'] - Receive separator
    * @param {string} [sendSeparator='\n'] - Send separator
    */
@@ -283,8 +283,8 @@ class BluetoothTerminal {
         then((characteristic) => {
           this._log('Characteristic found ');
 
-          this._characteristic = characteristic; // Remember characteristic.	  
-	  
+          this._characteristic = characteristic; // Remember characteristic.
+		  
           return this._characteristic;
         });
   }

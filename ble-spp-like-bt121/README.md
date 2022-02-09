@@ -8,8 +8,9 @@ One of browsers which supports Web Bluetooth API by default
 
 1. Chrome for desktop 56+
 2. Chrome for Android 56+
-3. Opera 43+
-4. Opera for Android 43+
+3. Microsoft Edge for desktop
+4. Microsoft Edge for Android
+
 
 
 
