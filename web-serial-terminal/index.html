@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+<head>
+<title>Web based Serial Terminal</title>
+</head>
+<body>
+
+<div style="display:inline-block; vertical-align:top;">
+
+<b>Web based Serial Terminal</b>
+<br>
+
+Serial port speed: 
+<select name="speed" id="SerialSpeed">
+  <option value="9600">9600</option>
+  <option value="115200">115200</option>
+</select>
+	<button id="SerialConnectButton" type="button" disabled>Connect</button>
+<br>
+
+<br>
+
+<div>
+Command Value: 
+	<input type="text" id="sendValue" name="sendValue" size="50">
+	<button id="SendButton" type="button" onclick="sendAll()">Send</button> 
+	<button id="ClearButton" type="button" onclick="clearAll()">Clear</button> 
+</div>
+
+<br>
+
+<div>
+<textarea id="serialout" name="serialout" rows="100" cols="80">
+
+</textarea>
+</div>
+</div>
+
+</body>
+
+<script>
+
+const connectButton = document.getElementById ('SerialConnectButton');
+let port;
+
+if ('serial' in navigator) {
+  connectButton.addEventListener('click', function () {
+    if (port) {
+	  document.getElementById("serialout").innerHTML = 'Disconnected from Serial Port';
+      port.close();
+      port = undefined;
+      connectButton.innerText = 'Connect';
+
+      document.getElementById('SerialSpeed').disabled = false;
+
+    }
+    else {
+      connectButton.innerText = 'Disconnect';
+      getReader();
+    }
+  });
+
+  connectButton.disabled = false;
+}
+else {
+  const error = document.createElement('p');
+  error.innerHTML = '<p>Support for Serial Web API not enabled. Please enable it using chrome://flags/ and enable Experimental Web Platform fetures</p>';
+
+}
+
+let lineBuffer = '';
+let latestValue = 0;
+let dataexport = '';
+
+
+//To send data to serial port
+async function serialWrite(data) {
+	encoder = new TextEncoder();
+	const dataArrayBuffer = encoder.encode(data);
+
+	if (port && port.writable) {
+		const writer = port.writable.getWriter();
+		writer.write(dataArrayBuffer);
+		writer.releaseLock();
+	}
+}
+
+async function getReader() {
+    port = await navigator.serial.requestPort({});
+	
+	var e = document.getElementById("SerialSpeed");
+	var strSpd = e.options[e.selectedIndex].value;
+
+	var speed = parseInt(strSpd);
+	
+	const options = {
+		baudRate: speed,
+		dataBits: 8,
+		parity: 'none',
+		stopBits: 1,
+		flowControl:'none',
+    };
+
+	await port.open(options);
+	
+	var textout = document.getElementById('serialout');
+
+	document.getElementById('SerialSpeed').disabled = true;
+
+	connectButton.innerText = 'Disconnect';
+
+	const appendStream = new WritableStream({
+	  write(chunk) {
+	  
+		lineBuffer += chunk;
+		textout.innerHTML = lineBuffer; //this is the area that variable can be set to store value
+		
+	  }
+	});
+
+	port.readable
+	  .pipeThrough(new TextDecoderStream())
+	  .pipeTo(appendStream);
+
+
+  } 
+
+//To send 'C' to reader to clear all session
+function clearAll() {
+  lineBuffer = '';
+  document.getElementById('serialout').innerHTML = '';
+}
+
+//To send 'C' to reader to clear all session
+function sendAll() {
+  serialWrite(document.getElementById('sendValue').value + "\r\n");
+}
+
+
+
+</script>
+
+</html>
+
