@@ -301,7 +301,7 @@ class BluetoothTerminal {
 
     return characteristic.startNotifications().
         then(() => {
-          this._log('Notifications started');
+          this._log('Notifications started...');
 
           characteristic.addEventListener('characteristicvaluechanged',
               this._boundHandleCharacteristicValueChanged);
