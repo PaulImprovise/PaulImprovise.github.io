@@ -217,7 +217,7 @@ class BluetoothTerminal {
       return;
     }
 
-    this._log('Disconnecting from "' + device.name + '" bluetooth device...');
+    this._log('Disconnecting from "' + device.name + '" GPScanID Device...');
 
     device.removeEventListener('gattserverdisconnected',
         this._boundHandleDisconnection);
@@ -230,7 +230,7 @@ class BluetoothTerminal {
 
     device.gatt.disconnect();
 
-    this._log('"' + device.name + '" bluetooth device disconnected');
+    this._log('"' + device.name + '" GPScanID Device Disconnected');
   }
 
   /**
@@ -239,13 +239,13 @@ class BluetoothTerminal {
    * @private
    */
   _requestBluetoothDevice() {
-    this._log('Requesting bluetooth device...');
+    this._log('Connecting GPScanID Device...');
 
     return navigator.bluetooth.requestDevice({
       filters: [{services: [this._serviceUuid]}],
     }).
         then((device) => {
-          this._log('"' + device.name + '" bluetooth device selected');
+          this._log('"' + device.name + '" Selected.');
 
           this._device = device; // Remember device.
           this._device.addEventListener('gattserverdisconnected',
